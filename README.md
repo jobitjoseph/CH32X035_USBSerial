@@ -2,7 +2,11 @@
 
 A USB CDC (Communications Device Class) Serial library for CH32X035 microcontrollers that provides Arduino Stream/Print API compatibility.
 
-[![Donate with PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/paypalme/jobitjoseph)
+<p align="center">
+  <a href="https://www.paypal.com/paypalme/jobitjoseph">
+    <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="Donate with PayPal" />
+  </a>
+</p>
 
 ## Features
 
