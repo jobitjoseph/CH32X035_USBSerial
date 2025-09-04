@@ -17,7 +17,9 @@ A USB CDC (Communications Device Class) Serial library for CH32X035 microcontrol
 - **Unique Serial Numbers**: Automatically generates unique serial numbers from chip UID
 
 ## Installation
-
+### Via Arduino Library Manager
+1. Search and install the CH32X035_USBSerial library.
+### Manual Installation
 1. Download or clone this library
 2. Place in your Arduino libraries folder: `~/Documents/Arduino/libraries/CH32X035_USBSerial/`
 3. Restart Arduino IDE
@@ -38,7 +40,7 @@ void setup() {
 }
 
 void loop() {
-  // Echo received data back to host
+  // Echo received data back to the host
   while (USBSerial.available()) {
     int c = USBSerial.read();
     if (c >= 0) {
@@ -78,7 +80,7 @@ void loop() {
 
 - `bool begin(uint16_t rxTxFifoSize = 0)` - Initialize USB CDC interface
 - `void end()` - Shutdown USB CDC interface
-- `int available()` - Returns number of bytes available to read
+- `int available()` - Returns the number of bytes available to read
 - `int read()` - Read next byte (-1 if none available)
 - `int peek()` - Peek at next byte without consuming it (returns -1)
 - `size_t write(uint8_t c)` - Write a single byte
@@ -101,7 +103,7 @@ The library provides a global `USBSerial` object ready to use, similar to the st
 
 ## Configuration
 
-Edit `wch_usbcdc_config.h` to customize:
+Edit `wch_usbcdc_config.h` to customise:
 
 - **USB Strings**: Manufacturer, Product, Interface descriptions
 - **USB IDs**: Vendor ID, Product ID (default uses VOTI test IDs)
@@ -112,7 +114,7 @@ Edit `wch_usbcdc_config.h` to customize:
 
 - **Microcontroller**: CH32X035 series
 - **USB Pins**: PC16 (D-), PC17 (D+)
-- **Core**: WCH CH32V Arduino core
+- **Core**: WCH CH32V Arduino core `https://github.com/openwch/arduino_core_ch32`
 
 ## Compatibility
 
@@ -126,7 +128,7 @@ See the `examples/` folder for:
 - The examples/ folder contains ready-to-use sketches:
 
 - Basic_USBSerial
-Basic initialization and print test. Prints messages to the USB serial monitor and waits for host connection.
+Basic initialisation and print test. Prints messages to the USB serial monitor and waits for host connection.
 
 - Basic_Echo
 Minimal USB CDC echo server. Reads characters from the USB host and echoes them back.
@@ -142,8 +144,7 @@ Bridges hardware UART and USB CDC. Useful for debugging or USB-to-serial adapter
 
 ## License
 
-This library is provided under the MIT License. See LICENSE file for details.
-
+This library is provided under the MIT License. See the LICENSE file for details.
 
 ## Support
 
