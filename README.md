@@ -114,7 +114,7 @@ Edit `wch_usbcdc_config.h` to customise:
 
 - **Microcontroller**: CH32X035 series
 - **USB Pins**: PC16 (D-), PC17 (D+)
-- **Core**: WCH CH32V Arduino core `https://github.com/openwch/arduino_core_ch32`
+- **Core**: WCH CH32V Arduino core `[https://github.com/jobitjoseph/CH32_Arduino_Core](https://github.com/jobitjoseph/CH32_Arduino_Core)`
 
 ## Compatibility
 
