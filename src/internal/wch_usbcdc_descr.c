@@ -1,5 +1,6 @@
 #include "wch_usbcdc_usb.h"
 #include "wch_usbcdc_config.h"
+#include "wch_usbcdc_internal.h"
 
 #define EP0_SIZE 8
 #define EP1_SIZE 8
@@ -25,17 +26,6 @@ const USB_DEV_DESCR wch_usbcdc_DevDescr = {
   .iSerialNumber      = 3,
   .bNumConfigurations = 1
 };
-
-typedef struct __attribute__((packed)) {
-  USB_CFG_DESCR config;
-  USB_IAD_DESCR association;
-  USB_ITF_DESCR interface0;
-  unsigned char functional[19];
-  USB_ENDP_DESCR ep1IN;
-  USB_ITF_DESCR interface1;
-  USB_ENDP_DESCR ep2OUT;
-  USB_ENDP_DESCR ep2IN;
-} WCH_USBCDC_CFG_DESCR_CDC;
 
 const WCH_USBCDC_CFG_DESCR_CDC wch_usbcdc_CfgDescr = {
   .config = {
@@ -115,41 +105,25 @@ const USB_STR_DESCR wch_usbcdc_LangDescr = {
 };
 
 // Dynamic string descriptors - automatically sized based on config
-struct __attribute__((packed)) { 
-    uint8_t bLength; 
-    uint8_t bDescriptorType; 
-    uint16_t bString[WCH_USBCDC_MANUF_LEN]; 
-} wch_usbcdc_ManufDescr = {
+WCH_USBCDC_MANUF_DESCR wch_usbcdc_ManufDescr = {
   .bLength = (uint8_t)(2 + 2 * WCH_USBCDC_MANUF_LEN),
   .bDescriptorType = USB_DESCR_TYP_STRING,
   .bString = {0} // Will be filled at runtime
 };
 
-struct __attribute__((packed)) { 
-    uint8_t bLength; 
-    uint8_t bDescriptorType; 
-    uint16_t bString[WCH_USBCDC_PROD_LEN]; 
-} wch_usbcdc_ProdDescr = {
+WCH_USBCDC_PROD_DESCR wch_usbcdc_ProdDescr = {
   .bLength = (uint8_t)(2 + 2 * WCH_USBCDC_PROD_LEN),
   .bDescriptorType = USB_DESCR_TYP_STRING,
   .bString = {0} // Will be filled at runtime
 };
 
-struct __attribute__((packed)) { 
-    uint8_t bLength; 
-    uint8_t bDescriptorType; 
-    uint16_t bString[WCH_USBCDC_SERIAL_LEN]; 
-} wch_usbcdc_SerDescr = {
+WCH_USBCDC_SER_DESCR wch_usbcdc_SerDescr = {
   .bLength = (uint8_t)(2 + 2 * WCH_USBCDC_SERIAL_LEN),
   .bDescriptorType = USB_DESCR_TYP_STRING,
   .bString = {0} // Will be filled at runtime
 };
 
-struct __attribute__((packed)) { 
-    uint8_t bLength; 
-    uint8_t bDescriptorType; 
-    uint16_t bString[WCH_USBCDC_INTERF_LEN]; 
-} wch_usbcdc_InterfDescr = {
+WCH_USBCDC_INTERF_DESCR wch_usbcdc_InterfDescr = {
   .bLength = (uint8_t)(2 + 2 * WCH_USBCDC_INTERF_LEN),
   .bDescriptorType = USB_DESCR_TYP_STRING,
   .bString = {0} // Will be filled at runtime

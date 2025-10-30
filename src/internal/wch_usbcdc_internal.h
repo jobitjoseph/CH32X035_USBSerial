@@ -7,6 +7,7 @@ extern "C" {
 #include <stdint.h>
 #include "wch_usbcdc_usb.h"
 #include "wch_usbcdc_config.h"
+#include "wch_usbfs_compat.h"
 
 // Prefer local header (project-proven) for USBFS macros; fallback to core header
 #if __has_include("ch32x035.h")
@@ -14,7 +15,6 @@ extern "C" {
 #else
 #include <ch32x035.h>
 #endif
-#include "wch_usbfs_compat.h"
 
 // Endpoint sizes
 #define WCH_USBCDC_EP0_SIZE 8
@@ -42,10 +42,36 @@ extern const WCH_USBCDC_CFG_DESCR_CDC wch_usbcdc_CfgDescr;
 
 // String descriptors (from descr.c)
 extern const USB_STR_DESCR wch_usbcdc_LangDescr;
-extern const void *wch_usbcdc_ManufDescr; // opaque type to avoid including array size
-extern const void *wch_usbcdc_ProdDescr;
-extern const void *wch_usbcdc_SerDescr;
-extern const void *wch_usbcdc_InterfDescr;
+
+// Variable-sized string descriptors - actual sizes defined by config macros
+typedef struct __attribute__((packed)) {
+    uint8_t bLength;
+    uint8_t bDescriptorType;
+    uint16_t bString[WCH_USBCDC_MANUF_LEN];
+} WCH_USBCDC_MANUF_DESCR;
+
+typedef struct __attribute__((packed)) {
+    uint8_t bLength;
+    uint8_t bDescriptorType;
+    uint16_t bString[WCH_USBCDC_PROD_LEN];
+} WCH_USBCDC_PROD_DESCR;
+
+typedef struct __attribute__((packed)) {
+    uint8_t bLength;
+    uint8_t bDescriptorType;
+    uint16_t bString[WCH_USBCDC_SERIAL_LEN];
+} WCH_USBCDC_SER_DESCR;
+
+typedef struct __attribute__((packed)) {
+    uint8_t bLength;
+    uint8_t bDescriptorType;
+    uint16_t bString[WCH_USBCDC_INTERF_LEN];
+} WCH_USBCDC_INTERF_DESCR;
+
+extern WCH_USBCDC_MANUF_DESCR wch_usbcdc_ManufDescr;
+extern WCH_USBCDC_PROD_DESCR wch_usbcdc_ProdDescr;
+extern WCH_USBCDC_SER_DESCR wch_usbcdc_SerDescr;
+extern WCH_USBCDC_INTERF_DESCR wch_usbcdc_InterfDescr;
 
 // USB handler state
 extern volatile uint8_t  USB_SetupReq, USB_SetupTyp, USB_Config, USB_Addr, USB_ENUM_OK;
